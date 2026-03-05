@@ -383,7 +383,6 @@ local function buildCard(server, idx)
     card.MouseEnter:Connect(function() card.BackgroundColor3=C.surfaceHov end)
     card.MouseLeave:Connect(function() card.BackgroundColor3=C.surface end)
 
-    -- Left accent bar
     local bar = frame({ Size=UDim2.new(0,3,0.65,0), Position=UDim2.new(0,0,0.175,0),
                         BackgroundColor3=C.accent, ZIndex=14 }, card)
     corner(2, bar)
@@ -447,7 +446,6 @@ function doLoadServers()
 
     local g = GAMES[selectedGameIndex]
 
-    -- Fetch server list using Place ID directly (no universe ID needed)
     setStatus("📡 Fetching servers...", C.muted)
     local data, rawOrErr = fetchServers(g.placeId, false)
 
@@ -512,7 +510,6 @@ end)
 task.spawn(function()
     setStatus("🔍 Fetching game info...", C.muted)
 
-    -- Format any raw numeric imageId as rbxassetid://, or fall back to rbxthumb
     for _, g in ipairs(GAMES) do
         if g.imageId and g.imageId ~= "" then
             -- Strip any existing prefix so we don't double-wrap
@@ -525,7 +522,6 @@ task.spawn(function()
     DropThumb.Image = GAMES[selectedGameIndex].imageId
     rebuildDropdown()
 
-    -- Fetch real names via multiget-place-details (don't touch imageId if already set)
     local placeIds = {}
     for _, g in ipairs(GAMES) do table.insert(placeIds, tostring(g.placeId)) end
     local details = fetchPlaceDetails(placeIds)
