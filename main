@@ -1,5 +1,3 @@
--- sur ver hoppprrrrrrrrrrrr
-
 local Players         = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
 local HttpService     = game:GetService("HttpService")
@@ -8,14 +6,14 @@ local LocalPlayer     = Players.LocalPlayer
 request = request or (syn and syn.request) or (http and http.request) or (fluxus and fluxus.request)
 
 local function httpGet(url)
-    -- Try executor request() first
+
     local ok, result = pcall(function()
         return request({Url = url, Method = "GET"}).Body
     end)
     if ok and type(result) == "string" and #result > 0 then
         return result
     end
-    -- Fallback to game:HttpGet
+
     local ok2, result2 = pcall(function()
         return game:HttpGet(url)
     end)
@@ -51,7 +49,7 @@ local function fetchServers(placeId)
 end
 
 local COOLDOWN_SECS  = 60
-local lastFetchTime  = -COOLDOWN_SECS  -- allow immediate first load
+local lastFetchTime  = -COOLDOWN_SECS
 
 local GAMES = {
     { name = "The Chosen One XL", placeId = 12943245078, imageId = "71221815941341" },
@@ -168,7 +166,7 @@ local Header = frame({
     Name="Header", Size=UDim2.new(1,0,0,52),
     BackgroundColor3=C.bg, ZIndex=11
 }, Window)
--- Bottom divider
+
 frame({ Size=UDim2.new(1,0,0,1), Position=UDim2.new(0,0,1,-1),
         BackgroundColor3=C.border, ZIndex=12 }, Header)
 
@@ -462,7 +460,7 @@ function doLoadServers()
 
     local servers = data.data or {}
     if #servers == 0 then
-        -- Dump raw response so we can see what Roblox actually returned
+
         local debugText = "No servers in .data[]\nRaw snippet: "..string.sub(tostring(rawOrErr),1,250)
         label({ Text=debugText, Font=Enum.Font.Code, TextSize=10,
                 TextColor3=C.warn, Size=UDim2.new(1,0,0,90),
@@ -485,7 +483,7 @@ RefreshBtn.MouseButton1Click:Connect(function()
     if elapsed < COOLDOWN_SECS then
         local remaining = math.ceil(COOLDOWN_SECS - elapsed)
         setStatus("⏱ Wait " .. remaining .. "s before refreshing", C.warn)
-        -- Show countdown on the button
+
         task.spawn(function()
             for t = remaining, 1, -1 do
                 if RefreshBtn and RefreshBtn.Parent then
@@ -512,7 +510,7 @@ task.spawn(function()
 
     for _, g in ipairs(GAMES) do
         if g.imageId and g.imageId ~= "" then
-            -- Strip any existing prefix so we don't double-wrap
+
             local raw = tostring(g.imageId):gsub("rbxassetid://", "")
             g.imageId = "rbxassetid://" .. raw
         else
@@ -538,7 +536,7 @@ task.spawn(function()
             if entry and entry.name and entry.name ~= "" then
                 g.name = entry.name
             end
-            -- Only use rbxthumb if no hardcoded image was provided
+
             if entry and entry.universeId and (g.imageId == "" or g.imageId:find("rbxthumb")) then
                 g.imageId = "rbxthumb://type=GameThumbnail&id=" .. tostring(entry.universeId) .. "&w=256&h=144"
             end
@@ -550,5 +548,3 @@ task.spawn(function()
 
     doLoadServers()
 end)
-
-print("Serverhopprrrrrrrr loadeddddd okkkkk bye
