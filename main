@@ -187,7 +187,7 @@ SettingsBtn.MouseEnter:Connect(function() SettingsBtn.BackgroundTransparency=0; 
 SettingsBtn.MouseLeave:Connect(function() SettingsBtn.BackgroundTransparency=1; SettingsBtn.TextColor3=C.muted end)
 
 local CloseBtn = btn({
-    Text="✕", Font=Enum.Font.Gotham, TextSize=13, TextColor3=C.muted,
+    Text="X", Font=Enum.Font.Gotham, TextSize=18, TextColor3=C.muted,
     BackgroundColor3=C.surface, BackgroundTransparency=1,
     Size=UDim2.new(0,30,0,30), Position=UDim2.new(1,-34,0.5,-15), ZIndex=13
 }, Header)
@@ -231,7 +231,7 @@ local DropLabel = label({
 }, DropBtn2)
 
 local Chevron = label({
-    Name="Chevron", Text="▾", Font=Enum.Font.Gotham, TextSize=13,
+    Name="Chevron", Text="v", Font=Enum.Font.Gotham, TextSize=13,
     TextColor3=C.muted, Position=UDim2.new(1,-28,0,0), Size=UDim2.new(0,18,1,0),
     TextXAlignment=Enum.TextXAlignment.Center, ZIndex=31
 }, DropBtn2)
@@ -352,7 +352,7 @@ local function rebuildDropdown()
             selectedGameIndex=i
             DropLabel.Text=g.name
             DropThumb.Image=g.imageId or ""
-            DropMenu.Visible=false; Chevron.Text="▾"
+            DropMenu.Visible=false; Chevron.Text="v"
             rebuildDropdown()
             clearScroll()
             setStatus("⏳ Loading servers...", C.muted)
@@ -365,7 +365,7 @@ local dropOpen = false
 DropBtn2.MouseButton1Click:Connect(function()
     dropOpen=not dropOpen
     DropMenu.Visible=dropOpen
-    Chevron.Text=dropOpen and "▴" or "▾"
+    Chevron.Text=dropOpen and "^" or "v"
 end)
 
 local function buildCard(server, idx)
